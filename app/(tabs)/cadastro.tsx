@@ -29,11 +29,7 @@ export default function Cadastro() {
   };
 
   return (
-    
     <ScrollView style={styles.root}>
-      <View style={styles.logo}>
-        <Image style={styles.image} source={require('@/assets/images/icon.png')} />
-      </View>
       <View style={styles.container}>
         <Text style={styles.label}>Obreiro:</Text>
         <TextInput
