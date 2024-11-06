@@ -2,18 +2,33 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Image, ScrollView } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import MaskInput, { Masks } from 'react-native-mask-input';
+import { useEntradaDataBase } from '@/database/useEntradaDataBase';
 
 export default function Cadastro() {
 
-  const [cadastrante, setCadastrante] = useState('');
+  const [obreiro, setObreiro] = useState('');
   const [tipo, setTipo] = useState('');
   const [valor, setValor] = useState('');
   const [dizimista, setDizimista] = useState('');
 
+  const entradaDB = useEntradaDataBase();
+
+  async function saveEntrada() {
+    try {
+      const response = await entradaDB.saveEntrada({ obreiro, tipo, valor: Number(valor), dizimista });
+
+      Alert.alert('Sucesso', 'Entrada cadastrada com sucesso com ID: ' + response.insertedRowId);
+    } catch (error) {
+      console.error(error);
+    }
+  }  
+
   const handleSave = () => {
-    if (!cadastrante || !tipo || !valor) {
+    if (!obreiro || !tipo || !valor) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
+    } else {
+      saveEntrada();
     }
   };
 
@@ -34,8 +49,8 @@ export default function Cadastro() {
         <Text style={styles.label}>Obreiro:</Text>
         <TextInput
           style={styles.input}
-          value={cadastrante}
-          onChangeText={setCadastrante}
+          value={obreiro}
+          onChangeText={setObreiro}
           placeholder="Nome do obreiro"
         />
         <Text style={styles.label}>Tipo:</Text>
@@ -51,7 +66,7 @@ export default function Cadastro() {
         <MaskInput
             style={styles.input}
             value={valor}
-            onChangeText={(unmasked) => {setValor(unmasked)}}
+            onChangeText={(masked, unmasked) => {setValor(unmasked)}}
             mask={Masks.BRL_CURRENCY}
             inputMode='numeric'
         />
