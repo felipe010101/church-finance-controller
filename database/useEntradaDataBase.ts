@@ -32,8 +32,20 @@ export function useEntradaDataBase() {
 
         } catch (error) {
             throw error
-        }    
+        } finally {
+            await statement.finalizeAsync();
+        }
     }
+
+    async function getEntradas() {
+        const query = 'SELECT * FROM entrada'
+
+        try {
+            return await database.getAllAsync<Entrada>(query);
+        } catch (error) {
+            throw error;
+        }
+    }    
     
-    return { saveEntrada };
+    return { saveEntrada, getEntradas };
 }
