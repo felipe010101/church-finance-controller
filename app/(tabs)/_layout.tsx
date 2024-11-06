@@ -54,6 +54,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="cadastro"
+        options={{
+          title: 'Cadastro',
+          tabBarIcon: ({ color }) => <TabBarIcon name="edit" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }
