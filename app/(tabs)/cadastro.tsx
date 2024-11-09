@@ -15,7 +15,7 @@ export default function Cadastro() {
 
   async function saveEntrada() {
     try {
-      const response = await entradaDB.saveEntrada({ obreiro, tipo, valor: Number(valor), dizimista });
+      const response = await entradaDB.saveEntrada({ obreiro, tipo, valor: Number(valor), dizimista, dataRegistro: new Date().toISOString() });
 
       Alert.alert('Sucesso', 'Entrada cadastrada com sucesso com ID: ' + response.insertedRowId);
     } catch (error) {

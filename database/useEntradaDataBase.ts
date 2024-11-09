@@ -6,6 +6,7 @@ export type Entrada = {
     tipo: string;
     valor: number;
     dizimista: string;
+    dataRegistro: string;
 };
 
 export function useEntradaDataBase() {
@@ -15,7 +16,7 @@ export function useEntradaDataBase() {
     async function saveEntrada(data: Omit<Entrada, 'id'>) { 
 
         const statement = await database.prepareAsync(
-            'INSERT INTO entrada (obreiro, tipo, valor, dizimista) VALUES ($obreiro, $tipo, $valor, $dizimista)'
+            'INSERT INTO entradav1 (obreiro, tipo, valor, dizimista, dataRegistro) VALUES ($obreiro, $tipo, $valor, $dizimista, $dataRegistro)'
         )
 
         try {
@@ -23,7 +24,8 @@ export function useEntradaDataBase() {
                 $obreiro: data.obreiro,
                 $tipo: data.tipo,
                 $valor: data.valor,
-                $dizimista: data.dizimista
+                $dizimista: data.dizimista,
+                $dataRegistro: data.dataRegistro
             });
 
             const insertedRowId = result.lastInsertRowId.toLocaleString();
@@ -38,7 +40,7 @@ export function useEntradaDataBase() {
     }
 
     async function getEntradas() {
-        const query = 'SELECT * FROM entrada'
+        const query = 'SELECT * FROM entradav1'
 
         try {
             return await database.getAllAsync<Entrada>(query);
