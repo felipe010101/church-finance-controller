@@ -40,13 +40,14 @@ export default function Listagem() {
     return (
         <View style={styles.root}>
             <FlatList
+                style={{marginTop:50}}
                 data={entradas}
                 renderItem={({ item }) => {
 
                     const isExpanded = expandedItems.has(item.id);
 
                     return (
-                        <TouchableOpacity onPress={() => toggleExpand(item.id)}>
+                        <TouchableOpacity style={{marginBottom:10, marginLeft:50, marginRight:50}} onPress={() => toggleExpand(item.id)}>
                             <Text style={styles.item}>{item.dataRegistro.split('T')[0]}</Text>
                             {isExpanded && (
                                 <View>
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     item: {
-        backgroundColor: 'gray',
+        backgroundColor: '#f0f0f0',
         padding: 10,
         fontSize: 18,
         borderBottomWidth: 2,
